@@ -14,4 +14,9 @@ es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 # print(i)
 
 ### test query
-print(es.get(index='swapi', doc_type='people', id=5))
+# q = es.get(index='swapi', doc_type='people', id=5))
+# q = es.search(index="swapi", body={"query": {"prefix" : { "name" : "Darth Vader" }}})
+q = es.search(index="swapi", body={"query": {"prefix" : { "name" : "lu" }}})
+# q = es.search(index="swapi", body={"query": {"fuzzy_field" : { "name" : {"like_text": "lu", "max_query_terms":5}}}})
+
+print(q)

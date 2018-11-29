@@ -1,2 +1,3 @@
 /logs
 /elasticsearch*
+/web-services/__pycache__

@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>IR Search App</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+    <script src="../static/js/index.js"></script>
+</head>
+
+<body>
+    <div class="fixed-header">
+        <div class="search-container">
+            <input class="search-box" />
+            <button id="btn_search"></button>
+        </div>
+
+        <div class="search-detail">
+            Search detail here: counting, date, time,...
+        </div>
+    </div>
+
+    <div class="result">
+        {% for result in results %}
+        <div class="box">
+            Result: <br> {{result}}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

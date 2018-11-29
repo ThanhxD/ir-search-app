@@ -82,6 +82,14 @@ button#btn_search:hover {
     padding: 10px;
 }
 
+.search-detail span {
+    margin-left: 10px;
+}
+
+.search-detail .detail-value {
+    font-weight: bold;
+}
+
 .result {
     display: flex;
     flex-direction: column;
@@ -102,6 +110,7 @@ button#btn_search:hover {
     padding: 10px;
 
     cursor: pointer;
+    overflow: hidden;
 }
 
 .result .box:hover {

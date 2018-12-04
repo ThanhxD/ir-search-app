@@ -12,6 +12,7 @@ const fs = require('fs');
 	try {
 		let page = startPage;
 		let next = `${url}?format=json&page=${page}`;
+		let res;
 		while (next) {
 			res = await get(next);
 			fs.writeFile(`data/${jobName}/${page}.json`, res, 'utf8', (err) => {

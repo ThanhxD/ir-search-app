@@ -16,8 +16,18 @@ def index():
 @app.route('/search')
 def search():
     query = request.args.get('query')
-    results = es.search(index="swapi", body={"query": {"prefix" : { "name" : query }}})
-    print(results)
+    result = {}
+    if es.indices.exists(index="swapi"):
+        results = es.search(index="swapi", body={
+            "query": {
+                "match_phrase_prefix": {
+                    "name": query
+                }
+            }
+        })
+    else:
+        results = es.search(index="_all", body={"query": {"match_all": {}}})
+
     return render_template('index.html', results={
         "detail": {
             "query": query,

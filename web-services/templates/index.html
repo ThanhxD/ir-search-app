@@ -26,7 +26,8 @@
     <div class="result">
         {% for hit in results.hits %}
         <div class="box">
-            Result: <br> {{hit}}
+            <b>{{hit["_source"]['name']}}</b><br>
+            {{hit}}
         </div>
         {% endfor %}
     </div>

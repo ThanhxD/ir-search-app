@@ -40,7 +40,7 @@ input.oninput = function(e) {
 	if (val) {
 		timeout = setTimeout(() => {
 			getSugesstion(val);
-		}, 250);
+		}, 200);
 	} else {
 		if (isSuggesstVisble()) {
 			setSuggestVisible(false);
@@ -80,6 +80,8 @@ function getSugesstion(value) {
 
 function renderSuggest() {
 	let text, li;
+	const query = input.value;
+	const regx = new RegExp(query, 'gi');
 	removeSuggestContent();
 	if (!isSuggesstVisble()) {
 		setSuggestVisible(true);
@@ -88,7 +90,7 @@ function renderSuggest() {
 		text = suggestData[i];
 		li = document.createElement('li');
 		li.onclick = suggestClick;
-		li.innerText = text;
+		li.innerHTML = text.replace(regx, str => '<b>' + str + '</b>');;
 		listSuggest.appendChild(li);
 	}
 }

@@ -17,14 +17,8 @@ def index():
 def search():
     query = request.args.get('query')
     result = {}
-    if es.indices.exists(index="swapi"):
-        results = es.search(index="swapi", body={
-            "query": {
-                "match_phrase_prefix": {
-                    "name": query
-                }
-            }
-        })
+    if es.indices.exists(index="kenh14"):
+        results = do_search(query)
     else:
         results = es.search(index="_all", body={"query": {"match_all": {}}})
 
@@ -37,6 +31,18 @@ def search():
         "hits": results['hits']['hits']
     })
 
+
+def do_search(query):
+    results = es.search(index="kenh14", body={
+        "query": {
+            "multi_match": {
+                "query": query,
+                "fields": ["title", "content"]
+            }
+        }
+    })
+
+    return results
 
 if __name__ == '__main__':
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 10

@@ -100,8 +100,11 @@ button#btn_search:hover {
 }
 
 .result .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+
     width: 100%;
-    height: 150px;
 
     border: 1px solid #333;
     border-radius: 5px;
@@ -111,9 +114,28 @@ button#btn_search:hover {
 
     cursor: pointer;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .result .box:hover {
     background-color: #333;
     color: #fff;
+}
+
+.link {
+    font-size: larger;
+    font-weight: bolder;
+    color: #000;
+}
+.result .box:hover .link {
+    color: #fff;
+}
+
+.timestamp, .score {
+    font-size: small;
+    font-style: italic;
+}
+
+.content {
+
 }

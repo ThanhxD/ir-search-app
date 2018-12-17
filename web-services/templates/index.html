@@ -8,7 +8,7 @@
 
 <body>
     <div class="fixed-header">
-        <form action="/search" method="get" class="search-container">
+        <form autocomplete="off" action="/search" method="get" class="search-container">
             <input name="query" class="search-box" {% if results %} value="{{results.detail.query}}" {% endif %}/>
             <button id="btn_search"></button>
         </form>
@@ -26,8 +26,10 @@
     <div class="result">
         {% for hit in results.hits %}
         <div class="box">
-            <b>{{hit["_source"]['name']}}</b><br>
-            {{hit}}
+            <a href="" class="link">{{hit["_source"]["title"]}}</a><br />
+            <span class="timestamp">{{hit["_source"]["timestamp"]}}</span><br />
+            <p class="content">{{hit["_source"]["content"]}}</p>
+            <span class="score">{{hit["_score"]}}</span>
         </div>
         {% endfor %}
     </div>

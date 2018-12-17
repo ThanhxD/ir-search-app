@@ -1,31 +1,29 @@
-import requests
 import json
 from elasticsearch import Elasticsearch
+from os import listdir
 
 # cine: 1347
 # doisong: 630
 # sport: 808
 # xahoi: 709
-
-with open('./crawl-data/xahoi_kenh14_docs.txt', encoding='utf8') as fp:
-    lines = fp.readlines()
-
+files = listdir('./crawl-data');
 es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+i = 1; # Start from 1
 
-### crawl data from swapi.co
-r = requests.get('http://localhost:9200')
-i = 0
-while r.status_code == 200 and (i < len(lines)):
-    parts = lines[i].split('|')
-    news = {
-        'timestamp': parts[0],
-        'category': parts[1],
-        'title': parts[2],
-        'content': parts[3]
-    }
-    es.index(index='kenh14', doc_type='news', id=i+1347+630+808, body=json.loads(json.dumps(news)))
-    i=i+1
-    print(i)
+for file in files:
+    with open('./crawl-data/' + file, encoding='utf8') as fp:
+        lines = fp.readlines()
+    for line in lines:
+        parts = line.split('|')
+        news = {
+            'timestamp': parts[0],
+            'category': parts[1],
+            'title': parts[2],
+            'content': parts[3]
+        }
+        es.index(index='kenh14', doc_type='news', id=i, body=json.loads(json.dumps(news)))
+        i = i + 1
+        print("Indexing.. %d" % i)
 
 ### test query
 # q = es.get(index='kenh14', doc_type='news', id=5)

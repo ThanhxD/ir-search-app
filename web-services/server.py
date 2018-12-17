@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
 import json
 from datetime import datetime
@@ -31,6 +31,14 @@ def search():
         "hits": results['hits']['hits']
     })
 
+@app.route('/suggest')
+def suggest():
+    query = request.args.get('query')
+    result = es.search(index="kenh14", body={"query": {"prefix" : { "title" : query }}})
+    titles = [];
+    for record in result['hits']['hits']:
+        titles.append(record['_source']['title'])
+    return jsonify(titles)
 
 def do_search(query):
     results = es.search(index="kenh14", body={

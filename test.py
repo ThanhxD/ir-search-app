@@ -6,6 +6,17 @@ es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 # # print("Result 1");
 # print(q);
 
-q = es.search(index="kenh14", body={"query": {"prefix" : { "title" : "sau" }}})
+body = {
+	"query": {
+		"match": {
+			"title": {
+				"query": "sa khi",
+				"operator": "and"
+			}
+		}
+	}
+}
+
+q = es.search(index="kenh14ngram", body=body)
 for hit in q['hits']['hits']:
 	print(hit['_source']['title'])

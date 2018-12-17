@@ -31,14 +31,48 @@ def search():
         "hits": results['hits']['hits']
     })
 
-@app.route('/suggest')
-def suggest():
+@app.route('/suggest/edge_ngram')
+def suggest_edge_ngram():
     query = request.args.get('query')
-    result = es.search(index="kenh14", body={"query": {"prefix" : { "title" : query }}})
-    titles = [];
-    for record in result['hits']['hits']:
+    # results = es.search(index="kenh14", body={"query": {"match_phrase_prefix" : { "title" : query }}})
+    # results = es.search(index="kenh14", body={"query": {"prefix" : { "title" : query }}})
+    results = do_suggest_ngram(query)
+    titles = []
+    for record in results['hits']['hits']:
         titles.append(record['_source']['title'])
     return jsonify(titles)
+
+@app.route('/suggest/match_phrase_prefix')
+def suggest_phrase_prefix():
+    query = request.args.get('query')
+    results = es.search(index="kenh14", body={"query": {"match_phrase_prefix" : { "title" : query }}})
+    titles = []
+    for record in results['hits']['hits']:
+        titles.append(record['_source']['title'])
+    return jsonify(titles)
+
+@app.route('/suggest/prefix')
+def suggest_prefix():
+    query = request.args.get('query')
+    results = es.search(index="kenh14", body={"query": {"prefix" : { "title" : query }}})
+    titles = []
+    for record in results['hits']['hits']:
+        titles.append(record['_source']['title'])
+    return jsonify(titles)
+
+def do_suggest_ngram(query):
+    body = {
+        "query": {
+            "match": {
+                "title": {
+                    "query": query,
+                    "operator": "and"
+                }
+            }
+        }
+    }
+    results = es.search(index="kenh14ngram", body=body)
+    return results
 
 def do_search(query):
     results = es.search(index="kenh14", body={

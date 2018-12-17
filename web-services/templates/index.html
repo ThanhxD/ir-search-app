@@ -15,7 +15,14 @@
                 </ul>
             </div>
         </form>
-
+        <div style="margin-left: 50px">
+            Suggestion Mode: 
+            <select id="suggestMode">
+                <option value="edge_ngram">edge_ngram</option>
+                <option value="match_phrase_prefix">match_phrase_prefix</option>
+                <option value="prefix">prefix</option>
+            </select>
+        </div>
         {% if results %}
         <div class="search-detail">
             Search detail: <br>

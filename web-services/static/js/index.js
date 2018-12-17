@@ -80,7 +80,7 @@ function getSugesstion(value) {
 
 function renderSuggest() {
 	let text, li;
-	const query = input.value;
+	const query = input.value.trim();
 	const regx = new RegExp(query, 'gi');
 	removeSuggestContent();
 	if (!isSuggesstVisble()) {
